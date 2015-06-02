@@ -4,23 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
 
 public class MainActivity extends Activity {
-    private Djb2RA502012 djb2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        djb2 = new Djb2RA502012();
-
-        long h = djb2.get_hash("empty hash");
-
-        TextView t = (TextView)findViewById(R.id.text);
-        t.setText(Long.toString(h));
     }
 
     @Override
