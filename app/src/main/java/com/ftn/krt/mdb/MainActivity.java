@@ -7,15 +7,43 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class MainActivity extends Activity implements View.OnClickListener {
+    ListView mMoviesList;
+    MovieAdapter mAdapter;
+    MovieDB mDbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button b = (Button)findViewById(R.id.addButton);
-        b.setOnClickListener(this);
+        Button addButton = (Button)findViewById(R.id.addButton);
+        addButton.setOnClickListener(this);
+
+        mDbHelper = new MovieDB(this);
+        mAdapter = new MovieAdapter(this);
+
+        mMoviesList = (ListView)findViewById(R.id.movies_list);
+        mMoviesList.setAdapter(mAdapter);
+
+        Movie a = new Movie("first movie", "first editor", 2014, 12);
+        Movie b = new Movie("second movie", "second editor", 2015, 13);
+
+        mDbHelper.insert(a);
+        mDbHelper.insert(b);
+
+        Movie[] mList = mDbHelper.readMovies();
+        mAdapter.update(mList);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Movie[] movies = mDbHelper.readMovies();
+        mAdapter.update(movies);
     }
 
     @Override
