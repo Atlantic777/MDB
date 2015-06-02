@@ -51,7 +51,7 @@ public class MovieEdit extends Activity implements View.OnClickListener {
         if (v.getId() == R.id.ok_button) {
             String title = getInputData(R.id.in_title);
             String editor = getInputData(R.id.in_editor);
-            int year = Integer.parseInt(getInputData(R.id.in_editor));
+            int year = Integer.parseInt(getInputData(R.id.in_year));
 
             finish();
         } else if (v.getId() == R.id.cancel_button) {
