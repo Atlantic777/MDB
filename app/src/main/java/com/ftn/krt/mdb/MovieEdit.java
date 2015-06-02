@@ -5,14 +5,23 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 
-public class MovieEdit extends Activity {
+public class MovieEdit extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_edit);
+
+        Button bOk = (Button)findViewById(R.id.ok_button);
+        Button bCancel = (Button)findViewById(R.id.cancel_button);
+
+        bOk.setOnClickListener(this);
+        bCancel.setOnClickListener(this);
     }
 
     @Override
@@ -35,5 +44,24 @@ public class MovieEdit extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.ok_button) {
+            String title = getInputData(R.id.in_title);
+            String editor = getInputData(R.id.in_editor);
+            int year = Integer.parseInt(getInputData(R.id.in_editor));
+
+            finish();
+        } else if (v.getId() == R.id.cancel_button) {
+            finish();
+        }
+
+    }
+
+    private String getInputData(int editId) {
+        EditText edit = (EditText) findViewById(editId);
+        return edit.getText().toString();
     }
 }
