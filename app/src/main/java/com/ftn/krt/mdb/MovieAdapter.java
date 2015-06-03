@@ -39,16 +39,16 @@ public class MovieAdapter extends BaseAdapter {
     }
 
     public void update(Movie[] movies) {
-        if(movies == null) {
-            return;
-        }
-
         mMovies.clear();
-        for(Movie movie : movies) {
-            mMovies.put(movie.hash, movie);
+
+        if(movies != null) {
+            for (Movie movie : movies) {
+                mMovies.put(movie.hash, movie);
+            }
+
+            mKeyset = mMovies.keySet().toArray(new Long[mMovies.size()]);
         }
 
-        mKeyset = mMovies.keySet().toArray(new Long[mMovies.size()]);
         notifyDataSetChanged();
     }
 

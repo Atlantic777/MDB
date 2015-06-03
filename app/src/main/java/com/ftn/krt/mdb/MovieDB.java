@@ -112,7 +112,7 @@ public class MovieDB extends SQLiteOpenHelper {
             values.put(COLUMN_YEAR, movie.year);
             values.put(COLUMN_HASH, newHash);
 
-            db.update(TABLE_NAME, values, " hash = ? ", new String[] { Long.toString(oldHash) });
+            db.update(TABLE_NAME, values, " hash = ? ", new String[]{Long.toString(oldHash)});
         }
 
         private Movie createMovie(Cursor cursor) {
@@ -122,5 +122,11 @@ public class MovieDB extends SQLiteOpenHelper {
             int year = cursor.getInt(cursor.getColumnIndex(COLUMN_YEAR));
 
             return new Movie(title, editor, year, hash);
+        }
+
+        public void delete(Long hash) {
+            SQLiteDatabase db = getDb();
+
+            db.delete(TABLE_NAME, "hash = ?", new String[] {Long.toString(hash)});
         }
 }

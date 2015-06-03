@@ -38,16 +38,13 @@ public class MainActivity extends Activity
         mMoviesList.setOnItemClickListener(this);
         mMoviesList.setOnItemLongClickListener(this);
 
-        Movie[] mList = mDbHelper.readMovies();
-        mAdapter.update(mList);
+        refreshData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        Movie[] movies = mDbHelper.readMovies();
-        mAdapter.update(movies);
+        refreshData();
     }
 
     @Override
@@ -79,7 +76,6 @@ public class MainActivity extends Activity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "item short click");
         Intent i = new Intent(this, MovieEdit.class);
         i.putExtra(MovieEdit.KEY_MOVIE_HASH, id);
         startActivity(i);
@@ -87,7 +83,13 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "item long click");
+        mDbHelper.delete(id);
+        refreshData();
         return true;
+    }
+
+    private void refreshData() {
+        Movie[] movies = mDbHelper.readMovies();
+        mAdapter.update(movies);
     }
 }
