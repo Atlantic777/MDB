@@ -101,15 +101,18 @@ public class MovieDB extends SQLiteOpenHelper {
             return createMovie(cursor);
         }
 
-        public void update(Movie movie) {
+        public void update(Movie movie, long oldHash) {
             SQLiteDatabase db = getDb();
+
+            long newHash = djb2.get_hash(movie.getConcat());
 
             ContentValues values = new ContentValues();
             values.put(COLUMN_TITLE, movie.title);
             values.put(COLUMN_EDITOR, movie.editor);
             values.put(COLUMN_YEAR, movie.year);
+            values.put(COLUMN_HASH, newHash);
 
-            db.update(TABLE_NAME, values, " hash = ? ", new String[] { Long.toString(movie.hash) });
+            db.update(TABLE_NAME, values, " hash = ? ", new String[] { Long.toString(oldHash) });
         }
 
         private Movie createMovie(Cursor cursor) {

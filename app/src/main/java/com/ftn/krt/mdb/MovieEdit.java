@@ -32,11 +32,17 @@ public class MovieEdit extends Activity implements View.OnClickListener {
 
         movieDB = new MovieDB(this);
 
-        Intent i = getIntent();
-        if(i.hasExtra(KEY_MOVIE_HASH)) {
+        if(getIntent().hasExtra(KEY_MOVIE_HASH)) {
             mMode = MODE_EDIT;
-            long h = i.getLongExtra(KEY_MOVIE_HASH, -2);
+
+            long h = getIntent().getLongExtra(KEY_MOVIE_HASH, -2);
             Toast.makeText(this, Long.toString(h), Toast.LENGTH_SHORT).show();
+
+            Movie m = movieDB.readMovie(h);
+
+            putInputData(R.id.in_title, m.title);
+            putInputData(R.id.in_editor, m.editor);
+            putInputData(R.id.in_year, Integer.toString(m.year));
         }
         else {
             mMode = MODE_ADD;
@@ -72,9 +78,13 @@ public class MovieEdit extends Activity implements View.OnClickListener {
             String editor = getInputData(R.id.in_editor);
             int year = Integer.parseInt(getInputData(R.id.in_year));
 
+            Movie m = new Movie(title, editor, year);
+
             if(mMode == MODE_ADD) {
-                Movie m = new Movie(title, editor, year);
                 movieDB.insert(m);
+            } else if(mMode == MODE_EDIT) {
+                long h = getIntent().getLongExtra(KEY_MOVIE_HASH, -1);
+                movieDB.update(m, h);
             }
 
             finish();
@@ -87,5 +97,10 @@ public class MovieEdit extends Activity implements View.OnClickListener {
     private String getInputData(int editId) {
         EditText edit = (EditText) findViewById(editId);
         return edit.getText().toString();
+    }
+
+    private void putInputData(int editId, String data) {
+        EditText edit = (EditText) findViewById(editId);
+        edit.setText(data);
     }
 }
