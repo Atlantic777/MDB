@@ -1,6 +1,7 @@
 package com.ftn.krt.mdb;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,9 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class MovieEdit extends Activity implements View.OnClickListener {
+    protected final static String KEY_MOVIE_HASH = "HASH";
+    private final int MODE_ADD = 0;
+    private final int MODE_EDIT = 1;
+    private int mMode;
+    private MovieDB movieDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,18 @@ public class MovieEdit extends Activity implements View.OnClickListener {
 
         bOk.setOnClickListener(this);
         bCancel.setOnClickListener(this);
+
+        movieDB = new MovieDB(this);
+
+        Intent i = getIntent();
+        if(i.hasExtra(KEY_MOVIE_HASH)) {
+            mMode = MODE_EDIT;
+            long h = i.getLongExtra(KEY_MOVIE_HASH, -2);
+            Toast.makeText(this, Long.toString(h), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            mMode = MODE_ADD;
+        }
     }
 
     @Override
@@ -52,6 +71,11 @@ public class MovieEdit extends Activity implements View.OnClickListener {
             String title = getInputData(R.id.in_title);
             String editor = getInputData(R.id.in_editor);
             int year = Integer.parseInt(getInputData(R.id.in_year));
+
+            if(mMode == MODE_ADD) {
+                Movie m = new Movie(title, editor, year);
+                movieDB.insert(m);
+            }
 
             finish();
         } else if (v.getId() == R.id.cancel_button) {

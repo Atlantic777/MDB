@@ -3,13 +3,21 @@ package com.ftn.krt.mdb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity
+        implements View.OnClickListener,
+                    AdapterView.OnItemClickListener,
+                    AdapterView.OnItemLongClickListener {
+
+    private final String TAG = "MAIN_ACTIVITY";
     ListView mMoviesList;
     MovieAdapter mAdapter;
     MovieDB mDbHelper;
@@ -27,12 +35,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         mMoviesList = (ListView)findViewById(R.id.movies_list);
         mMoviesList.setAdapter(mAdapter);
-
-        Movie a = new Movie("first movie", "first editor", 2014, 12);
-        Movie b = new Movie("second movie", "second editor", 2015, 13);
-
-        mDbHelper.insert(a);
-        mDbHelper.insert(b);
+        mMoviesList.setOnItemClickListener(this);
+        mMoviesList.setOnItemLongClickListener(this);
 
         Movie[] mList = mDbHelper.readMovies();
         mAdapter.update(mList);
@@ -71,5 +75,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         startActivity(new Intent(this, MovieEdit.class));
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "item short click");
+        Intent i = new Intent(this, MovieEdit.class);
+        i.putExtra(MovieEdit.KEY_MOVIE_HASH, id);
+        startActivity(i);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "item long click");
+        return true;
     }
 }

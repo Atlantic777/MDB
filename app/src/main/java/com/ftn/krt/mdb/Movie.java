@@ -23,4 +23,8 @@ public class Movie {
         this.year = year;
         this.hash = hash;
     }
+
+    public String getConcat() {
+        return title + editor + year;
+    }
 }
