@@ -3,21 +3,17 @@ package com.ftn.krt.mdb;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity
         implements View.OnClickListener,
                     AdapterView.OnItemClickListener,
                     AdapterView.OnItemLongClickListener {
 
-    private final String TAG = "MAIN_ACTIVITY";
     ListView mMoviesList;
     MovieAdapter mAdapter;
     MovieDB mDbHelper;
@@ -45,13 +41,6 @@ public class MainActivity extends Activity
     protected void onResume() {
         super.onResume();
         refreshData();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override

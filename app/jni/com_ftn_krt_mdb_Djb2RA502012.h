@@ -9,10 +9,10 @@ extern "C" {
 #endif
 /*
  * Class:     com_ftn_krt_mdb_Djb2RA502012
- * Method:    get_hash
+ * Method:    getHashRA502012
  * Signature: (Ljava/lang/String;)J
  */
-JNIEXPORT jlong JNICALL Java_com_ftn_krt_mdb_Djb2RA502012_get_1hash
+JNIEXPORT jlong JNICALL Java_com_ftn_krt_mdb_Djb2RA502012_getHashRA502012
   (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus

@@ -3,7 +3,7 @@
 #include "com_ftn_krt_mdb_Djb2RA502012.h"
 
 
-JNIEXPORT jlong JNICALL Java_com_ftn_krt_mdb_Djb2RA502012_get_1hash
+JNIEXPORT jlong JNICALL Java_com_ftn_krt_mdb_Djb2RA502012_getHashRA502012
   (JNIEnv *env, jobject obj, jstring s)
 {
     long hash = 5381;

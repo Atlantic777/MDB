@@ -56,7 +56,7 @@ public class MovieDB extends SQLiteOpenHelper {
         public void insert(Movie movie) {
             SQLiteDatabase db = getDb();
 
-            long hash = djb2.get_hash(movie.getConcat());
+            long hash = djb2.getHashRA502012(movie.getConcat());
 
             ContentValues values = new ContentValues();
             values.put(COLUMN_TITLE, movie.title);
@@ -104,7 +104,7 @@ public class MovieDB extends SQLiteOpenHelper {
         public void update(Movie movie, long oldHash) {
             SQLiteDatabase db = getDb();
 
-            long newHash = djb2.get_hash(movie.getConcat());
+            long newHash = djb2.getHashRA502012(movie.getConcat());
 
             ContentValues values = new ContentValues();
             values.put(COLUMN_TITLE, movie.title);
